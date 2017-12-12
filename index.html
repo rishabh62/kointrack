@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <title>Koin Track</title>
+
+    <script id='sap-ui-bootstrap' src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-theme='sap_belize'
+        data-sap-ui-libs='sap.m' data-sap-ui-resourceroots='{
+            "kointrack": "./"
+         }'>
+
+        </script>
+
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/regression/1.3.0/regression.min.js"></script> -->
+
+
+    <script>
+        sap.ui.getCore().attachInit(function () {
+            sap.ui.xmlview({
+                viewName: "kointrack.view.App"
+            }).placeAt("content");
+        });
+    </script>
+
+</head>
+
+<body id='content' class='sapUiBody'>
+</body>
+
+</html>

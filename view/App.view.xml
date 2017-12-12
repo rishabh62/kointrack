@@ -1,0 +1,27 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="kointrack.controller.App" displayBlock="true">
+    
+    <!-- Id's of components are defined as <parentControl>-<childControl>-id -->
+    <SplitApp id="splitApp-id">
+        <masterPages>
+            <Page id="splitApp-masterPage-id" title="Trading Platforms">
+                <content>
+                    <List>
+                        <items>
+                            <StandardListItem title="Koinex" press="onPressKoinex"/>
+                            <StandardListItem title="Coindelta" press="onPressCoindelta"/>
+                            <StandardListItem title="Zebpay" press="onPressZebpay"/>
+                        </items>
+                    </List>
+                </content>
+            </Page>
+        </masterPages>
+        
+        <detailPages>
+            <Page id="splitApp-detailPage-id" title="Coin prices">
+                <content>
+                    
+                </content>
+            </Page>
+        </detailPages>
+    </SplitApp>
+</mvc:View>
