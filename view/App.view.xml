@@ -5,11 +5,11 @@
         <masterPages>
             <Page id="splitApp-masterPage-id" title="Trading Platforms">
                 <content>
-                    <List>
+                    <List >
                         <items>
-                            <StandardListItem title="Koinex" press="onPressKoinex"/>
-                            <StandardListItem title="Coindelta" press="onPressCoindelta"/>
-                            <StandardListItem title="Zebpay" press="onPressZebpay"/>
+                            <StandardListItem title="Koinex" type="Active" press="onPressKoinex"/>
+                            <StandardListItem title="Coindelta" type="Active" press="onPressCoindelta"/>
+                            <StandardListItem title="Zebpay" type="Active" press="onPressZebpay"/>
                         </items>
                     </List>
                 </content>

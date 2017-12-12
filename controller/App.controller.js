@@ -3,10 +3,16 @@ sap.ui.define([
 ], function (Controller) {
     "use strict";
     return Controller.extend("kointrack.controller.App", {
+        
         onInit: function () {
 
 
+        },
+
+        onPressKoinex: function(){
+            alert("koinex pressed");
         }
+
     });
 
 
