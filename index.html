@@ -17,9 +17,18 @@
 
     <script>
         sap.ui.getCore().attachInit(function () {
-            sap.ui.xmlview({
-                viewName: "kointrack.view.App"
-            }).placeAt("content");
+            // sap.ui.xmlview({
+            //     viewName: "kointrack.view.App"
+            // }).placeAt("content");
+
+           
+			new sap.m.Shell({
+				app : new sap.ui.xmlview({
+                    viewName: "kointrack.view.App"
+                })
+			}).placeAt("content");
+		
+
         });
     </script>
 

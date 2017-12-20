@@ -3,24 +3,30 @@
     <!-- Id's of components are defined as <parentControl>-<childControl>-id -->
     <SplitApp id="splitApp-id">
         <masterPages>
-            <Page id="splitApp-masterPage-id" title="Trading Platforms">
+            <Page id="splitApp-masterPage-id" title="Coin name">
+                <subHeader>
+			        <Toolbar>
+                        <SearchField liveChange="onSearch"/>
+                   	</Toolbar>
+		        </subHeader>
                 <content>
-                    <List >
-                        <items>
-                            <StandardListItem title="Koinex" type="Active" press="onPressKoinex"/>
-                            <StandardListItem title="Coindelta" type="Active" press="onPressCoindelta"/>
-                            <StandardListItem title="Zebpay" type="Active" press="onPressZebpay"/>
-                        </items>
-                    </List>
+                        <List id="masterPage-list-id" 
+                        items="{/Data}">
+                            <items>
+                                <StandardListItem title="{CoinName}"/>
+                            <!-- <StandardListItem title="Coindelta" type="Active" press="onPressCoindelta"/>
+                            <StandardListItem title="Zebpay" type="Active" press="onPressZebpay"/> -->
+                            </items>
+                        </List>                    
                 </content>
             </Page>
         </masterPages>
         
         <detailPages>
-            <Page id="splitApp-detailPage-id" title="Coin prices">
-                <content>
-                    
-                </content>
+            <Page id="splitApp-detailPage-id" title="Coin detail">
+                <!-- <List	id="tileContainer-id" items="{/coins}">
+			        <DisplayListItem label="{coinName}" value="{price}"/>
+		        </List> -->
             </Page>
         </detailPages>
     </SplitApp>
