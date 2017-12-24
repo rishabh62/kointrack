@@ -10,6 +10,10 @@ sap.ui.define([
             this.oData = {};
             var self = this;
 
+            //creating busy indicator model
+            var oBusyModel = new sap.ui.model.json.JSONModel({busy: true});
+            this.getView().setModel(oBusyModel, "busyIndicator");
+
             // var oCoinList = this.getView().byId("masterPage-list-id");
             // oCoinList.getBinding("items").sort( new sap.ui.model.Sorter('CoinName'));
         //     fetch("https://www.cryptocompare.com/api/data/coinlist/", {method: 'GET',mode:'cors'}).then(function(response) {
@@ -31,9 +35,11 @@ sap.ui.define([
                 // });	
                 
                 // oMultiInput.placeAt("page");
-                self.oModel = sap.ui.model.json.JSONModel(self.oData);
+                self.oModel = new sap.ui.model.json.JSONModel(self.oData);
                 self.oModel.setSizeLimit(10000);
                 self.getView().setModel(self.oModel);
+                self.getView().getModel("busyIndicator").setProperty("/busy", false);
+                console.log(self.getView().getModel("busyIndicator"));
                 //self.getView().getModel().refresh();
             }
         });
@@ -87,6 +93,12 @@ sap.ui.define([
             //update list binding with filtered values
             var oCoinList = this.getView().byId("masterPage-list-id");
             oCoinList.getBinding("items").filter(aFilters, "Application");
+        },
+
+        onItemPress: function(oEvent){
+            var sPath = oEvent.getParameter("listItem").getBindingContext().sPath;
+            var sSymbol = sPath.split("/")[2]; //eg of sPath here "/Data/BTC" so this gives the symbol BTC
+            this.getView().byId("detailPage-textArea-id").setValue(this.oData["Data"][sSymbol]["CoinName"]);
         }
 
     });

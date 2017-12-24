@@ -3,7 +3,7 @@
     <!-- Id's of components are defined as <parentControl>-<childControl>-id -->
     <SplitApp id="splitApp-id">
         <masterPages>
-            <Page id="splitApp-masterPage-id" title="Coin name">
+            <Page id="splitApp-masterPage-id" title="Coin name" busy="{busyIndicator>/busy}">
                 <subHeader>
 			        <Toolbar>
                         <SearchField liveChange="onSearch"/>
@@ -11,9 +11,10 @@
 		        </subHeader>
                 <content>
                         <List id="masterPage-list-id" 
-                        items="{/Data}">
+                        items="{/Data}"
+                        itemPress="onItemPress">
                             <items>
-                                <StandardListItem title="{CoinName}"/>
+                                <StandardListItem title="{CoinName}" type="Active"/>
                             <!-- <StandardListItem title="Coindelta" type="Active" press="onPressCoindelta"/>
                             <StandardListItem title="Zebpay" type="Active" press="onPressZebpay"/> -->
                             </items>
@@ -27,6 +28,7 @@
                 <!-- <List	id="tileContainer-id" items="{/coins}">
 			        <DisplayListItem label="{coinName}" value="{price}"/>
 		        </List> -->
+                <TextArea id="detailPage-textArea-id" growing="true" />
             </Page>
         </detailPages>
     </SplitApp>
