@@ -3,89 +3,53 @@ sap.ui.define([
 ], function (Controller) {
     "use strict";
     return Controller.extend("kointrack.controller.App", {
-        
+
         onInit: function () {
             window.This = this;
-            window.l = this.getView().byId("li");
+            this.CRYPTOCOMPARE_API_URI = "https://min-api.cryptocompare.com";
+            this.CRYPTOCOMPARE_URI = "https://www.cryptocompare.com";
+
+            //  window.l = this.getView().byId("li");
+            this.initialiseModels();
             this.oData = {};
             var self = this;
 
-            //creating busy indicator model
-            var oBusyModel = new sap.ui.model.json.JSONModel({busy: true});
-            this.getView().setModel(oBusyModel, "busyIndicator");
-
-            // var oCoinList = this.getView().byId("masterPage-list-id");
-            // oCoinList.getBinding("items").sort( new sap.ui.model.Sorter('CoinName'));
-        //     fetch("https://www.cryptocompare.com/api/data/coinlist/", {method: 'GET',mode:'cors'}).then(function(response) {
-        //       return response.json();
-        //    }).then(function(data){
-        //        self.oData = data;
-        //    });
-        var url = "https://min-api.cryptocompare.com/data/all/coinlist";
-        $.ajax({
-            url: url,
-            async: true,
-            // jsonpCallback: 'getJSON',
-            contentType: "application/json",
-            // dataType: 'jsonp',
-            success: function(data) {
-                self.oData = data;
-                // var oMultiInput = sap.m.MultiInput("cur", {
-                // 	suggestionItems: "{path: '/Data'}"	
-                // });	
-                
-                // oMultiInput.placeAt("page");
-                self.oModel = new sap.ui.model.json.JSONModel(self.oData);
-                self.oModel.setSizeLimit(10000);
-                self.getView().setModel(self.oModel);
-                self.getView().getModel("busyIndicator").setProperty("/busy", false);
-                console.log(self.getView().getModel("busyIndicator"));
-                //self.getView().getModel().refresh();
-            }
-        });
-
-
-            // // this.onPressKoinex();
-            // this.oModel = sap.ui.model.json.JSONModel(this.oData);
-            
-            // this.getView().setModel(this.oModel);
-
+            var url = "https://min-api.cryptocompare.com/data/all/coinlist";
+            $.ajax({
+                url: url,
+                async: true,
+                // jsonpCallback: 'getJSON',
+                contentType: "application/json",
+                // dataType: 'jsonp',
+                success: function (data) {
+                    self.oData = data;
+                    self.oModel = new sap.ui.model.json.JSONModel(self.oData);
+                    self.oModel.setSizeLimit(10000);
+                    self.getView().setModel(self.oModel);
+                    self.getView().getModel("busyIndicator").setProperty("/busy", false);
+                }
+            });
         },
 
-        // onPressKoinex: function(){
-        //    var self = this;
-        //    fetch("https://koinex.in/api/ticker", {mode:'cors'}).then(function(response) {
-        //       return response.json();
-        //    }).then(function(data){
-        //        self.oData.coins = self.parseData(data.prices);
-        //        self.getView().getModel().refresh();
-        //    });
-        //    //debugger;
-          
-        //    self.oView.byId("tileContainer-id").refreshItems();
-        // },
+        initialiseModels: function(){
+            var oBusyModel = new sap.ui.model.json.JSONModel({ busy: true });
+            var oDetailPageModel = new sap.ui.model.json.JSONModel(
+                {
+                    Symbol: "",
+                    ImageUrl: "",
+                    CoinName: ""
+                }
+            );
+            this.getView().setModel(oBusyModel, "busyIndicator");
+            this.getView().setModel(oDetailPageModel, "detail");
+        },
 
-        // parseData: function(data){
-        //     var obj = {};
-        //     for(var key in data){
-        //         if(data.hasOwnProperty(key)){
-        //             obj[key] = {
-        //                 coinName: key,
-        //                 price: data[key]
-        //             };
-        //         }
-        //     }
-        //     //console.log(obj);
-        //     return obj;
-            
-        // },
-
-        onSearch: function(oEvent){
-            //var sQuery = oEvent.getParameter('query');
+        onSearch: function (oEvent) {
             var sQuery = oEvent.getSource().getValue();
+            
             //creating filter for model
             var aFilters = [];
-            if(sQuery && sQuery.length > 0){
+            if (sQuery && sQuery.length > 0) {
                 var oFilter = new sap.ui.model.Filter("CoinName", sap.ui.model.FilterOperator.Contains, sQuery);
                 aFilters.push(oFilter);
             }
@@ -95,10 +59,18 @@ sap.ui.define([
             oCoinList.getBinding("items").filter(aFilters, "Application");
         },
 
-        onItemPress: function(oEvent){
+        onItemPress: function (oEvent) {
             var sPath = oEvent.getParameter("listItem").getBindingContext().sPath;
             var sSymbol = sPath.split("/")[2]; //eg of sPath here "/Data/BTC" so this gives the symbol BTC
-            this.getView().byId("detailPage-textArea-id").setValue(this.oData["Data"][sSymbol]["CoinName"]);
+            // this.getView().byId("detailPage-textArea-id").setValue(this.oData["Data"][sSymbol]["CoinName"]);
+            var oDetailModel = this.getView().getModel("detail");
+            //oDetailModel.setProperty("/Symbol", sSymbol);
+
+            oDetailModel.setProperty("/ImageUrl", this.CRYPTOCOMPARE_URI + this.oData.Data[sSymbol].ImageUrl);
+            oDetailModel.setProperty("/CoinName", this.oData.Data[sSymbol].CoinName);
+            oDetailModel.setProperty("/Symbol", this.oData.Data[sSymbol].Symbol);
+            // this.getView().byId("h").setModel(oDetailModel);
+            // oDetailModel.refresh();
         }
 
     });

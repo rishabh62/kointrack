@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="kointrack.controller.App" displayBlock="true">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="kointrack.controller.App" xmlns:uxap="sap.uxap" displayBlock="true">
     
     <!-- Id's of components are defined as <parentControl>-<childControl>-id -->
     <SplitApp id="splitApp-id">
@@ -14,6 +14,7 @@
                         items="{/Data}"
                         itemPress="onItemPress">
                             <items>
+                            <!--  icon="{= 'https://www.cryptocompare.com/' + ${ImageUrl}}" to add icons to list -->
                                 <StandardListItem title="{CoinName}" type="Active"/>
                             <!-- <StandardListItem title="Coindelta" type="Active" press="onPressCoindelta"/>
                             <StandardListItem title="Zebpay" type="Active" press="onPressZebpay"/> -->
@@ -28,7 +29,25 @@
                 <!-- <List	id="tileContainer-id" items="{/coins}">
 			        <DisplayListItem label="{coinName}" value="{price}"/>
 		        </List> -->
-                <TextArea id="detailPage-textArea-id" growing="true" />
+                <content>
+                    <!-- <HBox>
+                        <Label text="Symbol: "/>
+                        <Label text="{path: 'detail>/Symbol'}" design="Bold"/>
+                    </HBox> -->
+                    <uxap:ObjectPageLayout id="detailPage-objectPageLayout-id"
+                                      enableLazyLoading="false"
+                                      showTitleInHeaderContent="true">
+                        <uxap:headerTitle>
+                            <uxap:ObjectPageHeader objectImageURI="{path: 'detail>/ImageUrl'}"
+                                                   objectTitle="{path: 'detail>/CoinName'}"
+                                                   objectSubtitle="{path: 'detail>/Symbol'}"
+                                                    isObjectIconAlwaysVisible="false"
+                                                    isObjectTitleAlwaysVisible="false"
+                                                    isObjectSubtitleAlwaysVisible="false">    
+                            </uxap:ObjectPageHeader>
+		                </uxap:headerTitle>
+                    </uxap:ObjectPageLayout>
+                </content>
             </Page>
         </detailPages>
     </SplitApp>
