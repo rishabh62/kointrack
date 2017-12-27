@@ -1,4 +1,4 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="kointrack.controller.App" xmlns:uxap="sap.uxap" displayBlock="true">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="kointrack.controller.App" xmlns:uxap="sap.uxap" xmlns:u="sap.ui.unified" xmlns:layout="sap.ui.layout" displayBlock="true">
     
     <!-- Id's of components are defined as <parentControl>-<childControl>-id -->
     <SplitApp id="splitApp-id">
@@ -37,6 +37,7 @@
                     <uxap:ObjectPageLayout id="detailPage-objectPageLayout-id"
                                       enableLazyLoading="false"
                                       showTitleInHeaderContent="true">
+
                         <uxap:headerTitle>
                             <uxap:ObjectPageHeader objectImageURI="{path: 'detail>/ImageUrl'}"
                                                    objectTitle="{path: 'detail>/CoinName'}"
@@ -46,6 +47,17 @@
                                                     isObjectSubtitleAlwaysVisible="false">    
                             </uxap:ObjectPageHeader>
 		                </uxap:headerTitle>
+
+                        <uxap:headerContent>
+                            <layout:VerticalLayout>
+                                <!-- empty vertical layout -->
+                            </layout:VerticalLayout>
+                             <layout:VerticalLayout>
+                                <Label text="Current price:" design="Bold"/>
+                                <u:Currency value="{= +${detail>/Price}}" currency="{path: 'detail>/Currency'}" useSymbol="true" />
+                            </layout:VerticalLayout>
+                        </uxap:headerContent>
+
                     </uxap:ObjectPageLayout>
                 </content>
             </Page>

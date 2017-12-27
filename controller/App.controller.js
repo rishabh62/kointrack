@@ -37,7 +37,10 @@ sap.ui.define([
                 {
                     Symbol: "",
                     ImageUrl: "",
-                    CoinName: ""
+                    CoinName: "",
+                    Price: "",
+                    Currency: "INR" // default currency
+
                 }
             );
             this.getView().setModel(oBusyModel, "busyIndicator");
@@ -69,10 +72,26 @@ sap.ui.define([
             oDetailModel.setProperty("/ImageUrl", this.CRYPTOCOMPARE_URI + this.oData.Data[sSymbol].ImageUrl);
             oDetailModel.setProperty("/CoinName", this.oData.Data[sSymbol].CoinName);
             oDetailModel.setProperty("/Symbol", this.oData.Data[sSymbol].Symbol);
+            
+            //filling up
+            var self = this;
+            var url = this.CRYPTOCOMPARE_API_URI + "/data/price?fsym=" + sSymbol + "&tsyms=" + oDetailModel.getProperty("/Currency");
+            $.ajax({
+                url: url,
+                async: true,
+                // jsonpCallback: 'getJSON',
+                contentType: "application/json",
+                // dataType: 'jsonp',
+                success: function (data) {
+                    oDetailModel.setProperty("/Price", data[oDetailModel.getProperty("/Currency")]);
+                    oDetailModel.refresh();
+                }
+            });
+        },
+
+
             // this.getView().byId("h").setModel(oDetailModel);
             // oDetailModel.refresh();
-        }
-
     });
 
 
